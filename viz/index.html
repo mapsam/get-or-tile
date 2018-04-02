@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Add a third party vector tile source</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'YOUR ACCESS TOKEN';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v9',
+    zoom: 13.34,
+    center: [-122.3276, 47.6058]
+});
+
+map.on('load', function() {
+    map.addLayer({
+        "id": "get-or-tile",
+        "type": "line",
+        "source": {
+            "type": "vector",
+            "tiles": ["http://127.0.0.1:3000/tiles/{z}/{x}/{y}.mvt"],
+            "minzoom": 0,
+            "maxzoom": 22
+        },
+        "source-layer": "roads",
+        "layout": {
+            "line-cap": "round",
+            "line-join": "round"
+        },
+        "paint": {
+            "line-opacity": 0.6,
+            "line-color": "rgb(53, 175, 109)",
+            "line-width": 2
+        }
+    });
+});
+</script>
+
+</body>
+</html>
